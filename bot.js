@@ -106,7 +106,6 @@ client.distube
 	else console.error(e)
 }
 )
-.on('empty', channel => channel.send('Voice channel is empty! Leaving the channel...'))
 .on('searchNoResult', (message, query) =>
 	message.channel.send(`${client.emotes.error} No result found for \`${query}\`!`)
 )
