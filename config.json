@@ -1,5 +1,7 @@
 {
     "prefix": ".",
+    "bot_channel":"the-zev-heaven",
+    "role_channel":"role-picker",
     "emoji": {
         "play": "▶️",
         "stop": "⏹️",

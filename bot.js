@@ -17,7 +17,11 @@ const { SpotifyPlugin } = require('@distube/spotify')
 const { SoundCloudPlugin } = require('@distube/soundcloud')
 const { YtDlpPlugin } = require('@distube/yt-dlp')
 
+//config file load variables
 client.config = require('./config.json')
+const prefix = client.config.prefix;
+const botchan = client.config.bot_channel;
+
 client.distube = new DisTube(client, {
 	leaveOnStop: false,
 	emitNewSongOnly: true,
@@ -56,12 +60,25 @@ client.on('ready', () => {
 
 //message listener
 client.on('messageCreate', message => {
-//ignore self 
+	//ignore self 
 	if (message.author.bot || !message.guild) return
 
-    const prefix = client.config.prefix;
+	// console.log(message.channel)
+	// console.log(message.channel.name)
+
+	//ignore anything not starting with prefix
+    // const prefix = client.config.prefix;
 	if (!message.content.startsWith(prefix) || message.author.bot)
 		return;
+
+	//make sure bot command message is in configured bot-channel, except for the .nuke command
+	if (message.channel.name != botchan && !(message.content.startsWith(".nuke"))) {
+		message.channel.send({ content: 'Bot commands must be sent in the channel: '+botchan , ephemeral: true }).then(msg=>{
+			setTimeout(() => msg.delete(), 5000)
+		})
+		message.delete({ timeout:5000 })
+		return
+	}
 
 	//parse command and confirm it is valid
 	const args = message.content.slice(prefix.length).trim().split(/ +/g)

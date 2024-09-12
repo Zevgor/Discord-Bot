@@ -1,5 +1,7 @@
 # Discord-Bot
 
+Install Dependencies via npm to use.
+
 Inside of ENV file, requires:
 
 BOT_TOKEN= 
